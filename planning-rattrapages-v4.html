@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planning Révisions — Rattrapages 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f7f4ef;
+  --surface: #ffffff;
+  --surface2: #f2ede6;
+  --border: #e0d9cf;
+  --border2: #c8bfb3;
+  --text: #2a2520;
+  --text-muted: #7a7068;
+  --text-dim: #b0a89e;
+  --accent: #8b6f47;
+  --accent-light: #f0e8dc;
+
+  --green: #3d8a52;
+  --green-bg: #edf7f0;
+  --green-border: #a8d4b4;
+  --orange: #c26820;
+  --orange-bg: #fef4ea;
+  --orange-border: #f0bc85;
+  --blue: #2a6496;
+
+  --conso7: #c0522a;
+  --dep:    #3a72a8;
+  --dip:    #8040a0;
+  --hdj:    #1e8a60;
+  --rm:     #a07820;
+  --succ:   #c04040;
+  --assur:  #2878a8;
+
+  --conso8:   #d4562a;
+  --contaff:  #4a8a28;
+  --suret:    #904898;
+  --procoll:  #1a6aaa;
+  --voies:    #a86820;
+  --contimmo: #b03058;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ── HEADER ── */
+header {
+  background: var(--surface);
+  border-bottom: 2px solid var(--border);
+  padding: 2rem 2rem 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 900;
+  color: var(--text);
+  line-height: 1.1;
+}
+h1 em { color: var(--accent); font-style: normal; }
+.header-sub {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-top: 0.4rem;
+}
+
+/* ── PROGRESS GLOBAL ── */
+.progress-global {
+  margin-top: 1.4rem;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.3rem;
+}
+.progress-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.progress-label { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); font-weight: 500; }
+.progress-pct { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--accent); font-weight: 700; }
+.bar-wrap { height: 6px; background: var(--border); border-radius: 4px; overflow: hidden; }
+.bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), #c4a060); border-radius: 4px; transition: width 0.4s ease; width: 0%; }
+.progress-stats { display: flex; gap: 1.5rem; margin-top: 0.5rem; flex-wrap: wrap; }
+.progress-stat { font-size: 0.68rem; color: var(--text-muted); }
+.progress-stat strong { color: var(--text); }
+
+/* ── MAIN ── */
+main { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+
+/* ── NOTE ── */
+.note-box {
+  background: var(--accent-light);
+  border: 1px solid var(--border2);
+  border-left: 4px solid var(--accent);
+  border-radius: 8px;
+  padding: 0.9rem 1.2rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+.note-box strong { color: var(--accent); }
+
+/* ── LÉGENDE SYMBOLES ── */
+.symboles-legend {
+  display: flex;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+  padding: 0.7rem 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+.sym-item { display: flex; align-items: center; gap: 0.4rem; }
+
+/* ── LÉGENDE MATIÈRES ── */
+.legend-section { margin-bottom: 1.5rem; }
+.section-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-bottom: 0.7rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+.legend-grid { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+
+.matiere-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.75rem;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  font-size: 0.72rem;
+  transition: border-color 0.2s, background 0.2s;
+}
+.matiere-badge.revue-1 { border-color: var(--green-border); background: var(--green-bg); }
+.matiere-badge.revue-2 { border-color: var(--orange-border); background: var(--orange-bg); }
+.matiere-badge.revue-3 { border-color: #f0a0a0; background: #fff5f5; }
+.badge-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+.badge-name { color: var(--text); font-weight: 500; }
+.badge-pages { color: var(--text-dim); font-size: 0.62rem; }
+.badge-count {
+  display: none;
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 0.05rem 0.35rem;
+  border-radius: 10px;
+}
+.revue-1 .badge-count { display: inline; background: var(--green); color: #fff; }
+.revue-2 .badge-count { display: inline; background: var(--orange); color: #fff; }
+.revue-3 .badge-count { display: inline; background: #c04040; color: #fff; }
+
+/* ── SEMAINE ── */
+.semaine-block { margin-bottom: 2.5rem; }
+.semaine-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.8rem 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.semaine-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+  min-width: 2.2rem;
+}
+.semaine-meta { flex: 1; }
+.semaine-title { font-size: 0.85rem; font-weight: 600; color: var(--text); }
+.semaine-dates { font-size: 0.67rem; color: var(--text-muted); margin-top: 0.1rem; }
+.semaine-prog { font-size: 0.7rem; color: var(--text-muted); white-space: nowrap; }
+.semaine-prog strong { color: var(--accent); font-weight: 700; }
+
+/* ── JOURS GRID ── */
+.jours-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 0.75rem;
+}
+
+/* ── JOUR CARD ── */
+.jour-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.jour-card:hover { border-color: var(--border2); box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.jour-card.off { opacity: 0.45; background: var(--surface2); }
+.jour-card.all-done { border-color: var(--green-border); background: var(--green-bg); }
+
+.jour-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 0.9rem;
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border);
+  gap: 0.5rem;
+}
+.jour-weekday {
+  font-size: 0.6rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+.jour-datenum {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+.jour-total-pages {
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  background: var(--surface);
+  padding: 0.15rem 0.45rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.jour-body { padding: 0.6rem 0.9rem; }
+
+/* ── SÉANCE ── */
+.seance {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  padding: 0.6rem 0;
+  cursor: pointer;
+  user-select: none;
+}
+.seance + .seance { border-top: 1px solid var(--border); }
+.seance:hover .check-box:not(.done) { border-color: var(--accent); }
+
+.check-box {
+  width: 18px; height: 18px;
+  border: 1.5px solid var(--border2);
+  border-radius: 4px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.18s;
+  background: var(--surface);
+}
+.check-box.done {
+  background: var(--green);
+  border-color: var(--green);
+}
+.check-box.done::after {
+  content: '✓';
+  font-size: 11px;
+  color: #fff;
+  font-weight: 700;
+}
+
+.seance-content { flex: 1; min-width: 0; }
+.seance-moment {
+  font-size: 0.57rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  font-weight: 600;
+  margin-bottom: 0.15rem;
+}
+
+.seance-mat-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.12rem;
+}
+.seance-mat {
+  font-size: 0.76rem;
+  font-weight: 600;
+}
+
+/* FLAGS — toujours visibles */
+.finish-flag {
+  font-size: 0.58rem;
+  font-weight: 600;
+  padding: 0.06rem 0.35rem;
+  border-radius: 10px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.finish-flag.lec1 { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+.finish-flag.lec2 { background: var(--orange-bg); color: var(--orange); border: 1px solid var(--orange-border); }
+
+.seance-detail {
+  font-size: 0.66rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+.seance-pages-tag {
+  font-size: 0.6rem;
+  color: var(--text-dim);
+  margin-top: 0.1rem;
+  font-weight: 500;
+}
+
+.off-label {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  text-align: center;
+  padding: 0.8rem 0;
+  font-style: italic;
+}
+
+/* ── RÉSULTATS ALERT ── */
+.resultats-badge {
+  display: inline-block;
+  font-size: 0.6rem;
+  background: #fff3cd;
+  border: 1px solid #f0c040;
+  color: #856404;
+  border-radius: 10px;
+  padding: 0.05rem 0.4rem;
+  font-weight: 600;
+  margin-left: 0.3rem;
+  vertical-align: middle;
+}
+
+@media (max-width: 600px) {
+  main { padding: 1rem; }
+  .jours-grid { grid-template-columns: 1fr; }
+  header { padding: 1.5rem 1rem 1rem; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Planning <em>Rattrapages</em></h1>
+  <p class="header-sub">Droit · S7 confirmé · S8 conditionnel · 18 mai → 19 juin 2026</p>
+  <div class="progress-global">
+    <div class="progress-row">
+      <span class="progress-label">Progression globale</span>
+      <span class="progress-pct" id="pct-global">0%</span>
+    </div>
+    <div class="bar-wrap"><div class="bar-fill" id="bar-global"></div></div>
+    <div class="progress-stats">
+      <span class="progress-stat"><strong id="done-count">0</strong> / <strong id="total-count">0</strong> séances cochées</span>
+      <span class="progress-stat">S7 : <strong>119p</strong> · S8 : <strong>146p</strong> conditionnel</span>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<div class="note-box">
+  <strong>Stratégie :</strong> Sem. 1–2 = 1ère passe S7 · Sem. 3 = relecture complète S7 + résultats S8 le 4–5 juin · Sem. 4 = sécurité S7 + S8 conditionnel · Sem. 5 = relecture légère à tête reposée.
+  <strong>DCA S8 :</strong> rien à réviser — exclu. <strong>Rythme :</strong> max 6–8p / demi-journée · Dimanche OFF · Soirées libres.
+</div>
+
+<div class="symboles-legend">
+  <span class="sym-item">🏁 <strong style="color:var(--green)">Fin lecture 1</strong> = tu termines cette matière pour la première fois</span>
+  <span class="sym-item">🔄 <strong style="color:var(--orange)">Fin relecture</strong> = tu termines la relecture complète</span>
+  <span class="sym-item">✓ = séance faite (à cocher)</span>
+  <span class="sym-item">Les badges matières passent en <strong style="color:var(--green)">vert</strong> (1x) puis <strong style="color:var(--orange)">orange</strong> (2x) quand tu coches</span>
+</div>
+
+<div class="legend-section">
+  <p class="section-label">Matières S7 — 119 pages</p>
+  <div class="legend-grid" id="legend-s7"></div>
+</div>
+<div class="legend-section">
+  <p class="section-label">Matières S8 — 146 pages · conditionnel (résultats 4–5 juin)</p>
+  <div class="legend-grid" id="legend-s8"></div>
+</div>
+
+<div id="planning-container"></div>
+
+</main>
+
+<script>
+const S7=[
+  {id:'conso7',label:'Droit de la conso.',pages:16,color:'var(--conso7)'},
+  {id:'dep',   label:'Droit de la dépendance',pages:17,color:'var(--dep)'},
+  {id:'dip',   label:'DIP',pages:14,color:'var(--dip)'},
+  {id:'hdj',   label:'HDJ',pages:14,color:'var(--hdj)'},
+  {id:'rm',    label:'RM',pages:18,color:'var(--rm)'},
+  {id:'succ',  label:'Successions',pages:21,color:'var(--succ)'},
+  {id:'assur', label:'Droit des assurances',pages:19,color:'var(--assur)'},
+];
+const S8=[
+  {id:'conso8',  label:'Conso. S8',pages:17,color:'var(--conso8)'},
+  {id:'contaff', label:"Contrats d'affaires",pages:22,color:'var(--contaff)'},
+  {id:'suret',   label:'Sûretés',pages:13,color:'var(--suret)'},
+  {id:'procoll', label:'Procédures collectives',pages:26,color:'var(--procoll)'},
+  {id:'voies',   label:"Voies d'exécution",pages:36,color:'var(--voies)'},
+  {id:'contimmo',label:'Contrats immobiliers',pages:34,color:'var(--contimmo)'},
+];
+const ALL=[...S7,...S8];
+function getM(id){return ALL.find(m=>m.id===id);}
+
+// cm = 'lec1' (fin 1ère lecture) ou 'lec2' (fin relecture)
+const DAYS=[
+// ── SEMAINE 1 ──────────────────────────────────────────────
+{date:'2026-05-18',seances:[
+  {mid:'conso7',mom:'Matin',      lab:'Conso. S7 — Intro. + Chap. 1',              det:'Intro. (p.1–2) + Chap. 1 (p.3–8)',                                        p:8},
+  {mid:'dep',   mom:'Après-midi', lab:'Dépendance — Intro. + Chap. 1 + Chap. 2',  det:'Intro. (p.1) + Chap. 1 (p.2–4) + Chap. 2 (p.5–8)',                       p:8},
+]},
+{date:'2026-05-19',seances:[
+  {mid:'conso7',mom:'Matin',      lab:'Conso. S7 — Chap. 2 + Chap. 3',            det:'Chap. 2 (p.9–12) + Chap. 3 (p.13–16)',                                    p:8,  cm:'lec1'},
+  {mid:'dep',   mom:'Après-midi', lab:'Dépendance — Chap. 3 + Chap. 4',           det:'Chap. 3 (p.9–12) + Chap. 4 (p.13–16)',                                    p:8},
+]},
+{date:'2026-05-20',seances:[
+  {mid:'dip',   mom:'Matin',      lab:'DIP — Intro. + Chap. 1',                   det:'Intro. (p.1–2) + Chap. 1 (p.3–7)',                                        p:7},
+  {mid:'dep',   mom:'Après-midi', lab:'Dépendance — Chap. 5',                     det:'Chap. 5 (p.17) — fin de Dépendance',                                      p:1,  cm:'lec1'},
+]},
+{date:'2026-05-21',seances:[
+  {mid:'dip',   mom:'Matin',      lab:'DIP — Chap. 2',                            det:'Chap. 2 (p.8–12)',                                                        p:5},
+  {mid:'hdj',   mom:'Après-midi', lab:'HDJ — Intro. + P1 Chap. 1',               det:'Intro. (p.1) + P1 Chap. 1 (p.2–4)',                                       p:4},
+]},
+{date:'2026-05-22',seances:[
+  {mid:'dip',   mom:'Matin',      lab:'DIP — Chap. 3',                            det:'Chap. 3 (p.13–14) — fin de DIP',                                         p:2,  cm:'lec1'},
+  {mid:'hdj',   mom:'Après-midi', lab:'HDJ — P1 Chap. 2 (1ère partie)',           det:'P1 Chap. 2 (p.5–7)',                                                      p:3},
+]},
+{date:'2026-05-23',seances:[
+  {mid:'hdj',   mom:'Matin',      lab:'HDJ — P1 Chap. 2 (fin) + Partie 2',       det:'P1 Chap. 2 fin (p.8–10) + Partie 2 (p.11–14)',                            p:7,  cm:'lec1'},
+  {mid:'rm',    mom:'Après-midi', lab:'RM — Intro. + Livre 1',                    det:'Intro. (p.1–2) + Livre 1 (p.3–6)',                                        p:6},
+]},
+{date:'2026-05-24',off:true},
+
+// ── SEMAINE 2 ──────────────────────────────────────────────
+{date:'2026-05-25',seances:[
+  {mid:'rm',    mom:'Matin',      lab:'RM — L2 Chap. prél. + L2 Chap. 1 (début)',det:'Chap. prél. (p.7–8) + Chap. 1 (p.9–14)',                                  p:8},
+  {mid:'succ',  mom:'Après-midi', lab:'Successions — Intro. + Méthodo. + Chap. prél.',det:'Intro. (p.1–2) + Méthodo. (p.3) + Chap. prél. (p.4–7)',              p:7},
+]},
+{date:'2026-05-26',seances:[
+  {mid:'rm',    mom:'Matin',      lab:'RM — L2 Chap. 1 (fin)',                    det:'Chap. 1 (p.15–18) — fin de RM',                                          p:4,  cm:'lec1'},
+  {mid:'succ',  mom:'Après-midi', lab:'Successions — Chap. 1 (1ère moitié)',      det:'Chap. 1 (p.8–12)',                                                        p:5},
+]},
+{date:'2026-05-27',seances:[
+  {mid:'assur', mom:'Matin',      lab:'Assurances — Intro. + T1 Chap. 1 + T1 Chap. 2',det:'Intro. (p.1–2) + T1 Chap. 1 (p.3–5) + T1 Chap. 2 (p.6–9)',        p:9},
+  {mid:'succ',  mom:'Après-midi', lab:'Successions — Chap. 1 (2ème moitié)',      det:'Chap. 1 suite (p.13–15)',                                                 p:3},
+]},
+{date:'2026-05-28',seances:[
+  {mid:'assur', mom:'Matin',      lab:'Assurances — T1 Chap. 3 + T2 Chap. 1 (début)',det:'T1 Chap. 3 (p.10–11) + T2 Chap. 1 (p.12–15)',                       p:6},
+  {mid:'succ',  mom:'Après-midi', lab:'Successions — Chap. 2 + Chap. 3',          det:'Chap. 2 (p.16–19) + Chap. 3 (p.20–21)',                                  p:6,  cm:'lec1'},
+]},
+{date:'2026-05-29',seances:[
+  {mid:'assur', mom:'Matin',      lab:'Assurances — T2 Chap. 1 (fin)',             det:'T2 Chap. 1 (p.16–19) — fin des Assurances',                              p:4,  cm:'lec1'},
+  {mid:'assur', mom:'Après-midi', lab:'✅ Toutes les matières S7 vues 1 fois !',   det:'Avance libre ou repos bien mérité',                                      p:0},
+]},
+{date:'2026-05-30',seances:[
+  {mid:'conso7',mom:'Matin',      lab:'🔁 Relecture Conso. S7 — Intro. + Chap. 1',det:'Intro. (p.1–2) + Chap. 1 (p.3–8)',                                       p:8},
+  {mid:'conso7',mom:'Après-midi', lab:'🔁 Relecture Conso. S7 — Chap. 2 + Chap. 3',det:'Chap. 2 (p.9–12) + Chap. 3 (p.13–16) — 16p au total',                 p:8,  cm:'lec2'},
+]},
+{date:'2026-05-31',off:true},
+
+// ── SEMAINE 3 ──────────────────────────────────────────────
+{date:'2026-06-01',seances:[
+  {mid:'dip',   mom:'Matin',      lab:'🔁 Relecture DIP — Intro. + Chap. 1 + Chap. 2',det:'Intro. (p.1–2) + Chap. 1 (p.3–7) + Chap. 2 (p.8–12)',              p:9},
+  {mid:'dip',   mom:'Après-midi', lab:'🔁 Relecture DIP — Chap. 3',                det:'Chap. 3 (p.13–14) — 14p au total',                                      p:2,  cm:'lec2'},
+]},
+{date:'2026-06-02',seances:[
+  {mid:'dep',   mom:'Matin',      lab:'🔁 Relecture Dépendance — Intro. + Chap. 1–3',det:'Intro. (p.1) + Chap. 1 (p.2–4) + Chap. 2 (p.5–8) + Chap. 3 (p.9–12)',p:9},
+  {mid:'dep',   mom:'Après-midi', lab:'🔁 Relecture Dépendance — Chap. 4 + Chap. 5',det:'Chap. 4 (p.13–16) + Chap. 5 (p.17) — 17p au total',                  p:8,  cm:'lec2'},
+]},
+{date:'2026-06-03',seances:[
+  {mid:'hdj',   mom:'Matin',      lab:'🔁 Relecture HDJ — Intro. + Partie 1',      det:'Intro. (p.1) + P1 Chap. 1 (p.2–4) + P1 Chap. 2 (p.5–10)',              p:7},
+  {mid:'hdj',   mom:'Après-midi', lab:'🔁 Relecture HDJ — Partie 2',               det:'Partie 2 (p.11–14) — 14p au total',                                     p:7,  cm:'lec2'},
+]},
+{date:'2026-06-04',resultats:true,seances:[
+  {mid:'rm',    mom:'Matin',      lab:'🔁 Relecture RM — Intro. + Livre 1 + L2 Chap. prél.',det:'Intro. (p.1–2) + Livre 1 (p.3–6) + L2 Chap. prél. (p.7–8)', p:8},
+  {mid:'rm',    mom:'Après-midi', lab:'🔁 Relecture RM — L2 Chap. 1',              det:'L2 Chap. 1 (p.9–18) — 18p au total',                                    p:10, cm:'lec2'},
+]},
+{date:'2026-06-05',resultats:true,seances:[
+  {mid:'succ',  mom:'Matin',      lab:'🔁 Relecture Successions — Intro. + Méthodo. + Chap. prél. + Chap. 1',det:'Intro. (p.1–2) + Méthodo. (p.3) + Chap. prél. (p.4–7) + Chap. 1 (p.8–12)',p:9},
+  {mid:'succ',  mom:'Après-midi', lab:'🔁 Relecture Successions — Chap. 1 (fin) + Chap. 2 + Chap. 3',det:'Chap. 1 (p.13–15) + Chap. 2 (p.16–19) + Chap. 3 (p.20–21) — 21p au total',p:12,cm:'lec2'},
+]},
+{date:'2026-06-06',seances:[
+  {mid:'assur', mom:'Matin',      lab:'🔁 Relecture Assurances — Intro. + T1',     det:'Intro. (p.1–2) + T1 Chap. 1 (p.3–5) + T1 Chap. 2 (p.6–9) + T1 Chap. 3 (p.10–11)',p:11},
+  {mid:'assur', mom:'Après-midi', lab:'🔁 Relecture Assurances — T2 Chap. 1',      det:'T2 Chap. 1 (p.12–19) — 19p au total',                                   p:8,  cm:'lec2'},
+]},
+{date:'2026-06-07',off:true},
+
+// ── SEMAINE 4 ──────────────────────────────────────────────
+{date:'2026-06-08',seances:[
+  {mid:'conso7',mom:'Matin',      lab:'🛡 Sécurité Conso. S7',                     det:'Relecture rapide en diagonal — points clés (16p)',                        p:0},
+  {mid:'conso8',mom:'Après-midi', lab:'📘 S8 — Conso. Chap. 1',                   det:'Chap. 1 (p.1–6)',                                                         p:6},
+]},
+{date:'2026-06-09',seances:[
+  {mid:'dip',   mom:'Matin',      lab:'🛡 Sécurité DIP',                           det:'Relecture rapide en diagonal — points clés (14p)',                        p:0},
+  {mid:'conso8',mom:'Après-midi', lab:'📘 S8 — Conso. Chap. 2 + Chap. 3',        det:'Chap. 2 (p.7–14) + Chap. 3 (p.15–17)',                                   p:11, cm:'lec1'},
+]},
+{date:'2026-06-10',seances:[
+  {mid:'dep',   mom:'Matin',      lab:'🛡 Sécurité Dépendance',                    det:'Relecture rapide en diagonal — points clés (17p)',                        p:0},
+  {mid:'suret', mom:'Après-midi', lab:'📘 S8 — Sûretés (1/2)',                    det:'Intro. (p.1) + P1 Chap. 1 (p.2–5) + P1 Chap. 2 (p.6–7) + P2 Chap. prél. (p.8)',p:8},
+]},
+{date:'2026-06-11',seances:[
+  {mid:'hdj',   mom:'Matin',      lab:'🛡 Sécurité HDJ',                           det:'Relecture rapide en diagonal — points clés (14p)',                        p:0},
+  {mid:'suret', mom:'Après-midi', lab:'📘 S8 — Sûretés (2/2)',                    det:'P2 Chap. 1 (p.9–11) + P2 Chap. 2 (p.12–13)',                             p:5,  cm:'lec1'},
+]},
+{date:'2026-06-12',seances:[
+  {mid:'rm',    mom:'Matin',      lab:'🛡 Sécurité RM',                            det:'Relecture rapide en diagonal — points clés (18p)',                        p:0},
+  {mid:'contaff',mom:'Après-midi',lab:"📘 S8 — Contrats d'affaires Intro. + Chap. 1",det:"Intro. (p.1) + Chap. 1 (p.2–8)",                                      p:8},
+]},
+{date:'2026-06-13',seances:[
+  {mid:'succ',  mom:'Matin',      lab:'🛡 Sécurité Successions + Assurances',      det:'Relecture rapide des deux matières en diagonal',                          p:0},
+  {mid:'contaff',mom:'Après-midi',lab:"📘 S8 — Contrats d'affaires Chap. 2",      det:'Chap. 2 (p.9–14)',                                                        p:6},
+]},
+{date:'2026-06-14',off:true},
+
+// ── SEMAINE 5 ──────────────────────────────────────────────
+{date:'2026-06-15',seances:[
+  {mid:'contaff',mom:'Matin',     lab:"📘 S8 — Contrats d'affaires Chap. 3",      det:'Chap. 3 (p.15–22)',                                                       p:8,  cm:'lec1'},
+  {mid:'procoll',mom:'Après-midi',lab:'📘 S8 — Procédures collectives (1/3)',      det:'Intro. (p.1) + P1 Chap. 1 (p.2–3) + P1 Chap. 2 (p.3–6)',               p:7},
+]},
+{date:'2026-06-16',seances:[
+  {mid:'procoll',mom:'Matin',     lab:'📘 S8 — Procédures collectives (2/3)',      det:'P2 T1 Chap. 1 (p.7–10) + P2 T1 Chap. 2 (p.11–14)',                      p:8},
+  {mid:'procoll',mom:'Après-midi',lab:'📘 S8 — Procédures collectives (3/3)',      det:'P2 T2 Chap. 1 (p.15–24) — 10p, 26p au total',                           p:10, cm:'lec1'},
+]},
+{date:'2026-06-17',seances:[
+  {mid:'voies',  mom:'Matin',     lab:"📘 S8 — Voies d'exécution (1/3)",           det:"Intro. (p.1) + T1 Chap. 1 (p.2–7)",                                      p:7},
+  {mid:'voies',  mom:'Après-midi',lab:"📘 S8 — Voies d'exécution (2/3)",           det:'T1 Chap. 2 (p.8–9) + T1 Chap. 3 (p.10–11) + T2 Chap. 1 (p.12–13) + T2 Chap. 2 (p.14–19)',p:12},
+]},
+{date:'2026-06-18',seances:[
+  {mid:'voies',  mom:'Matin',     lab:"📘 S8 — Voies d'exécution (3/3)",           det:"T2 Chap. 3 (p.20–36) — 17p, 36p au total",                               p:17, cm:'lec1'},
+  {mid:'contimmo',mom:'Après-midi',lab:'📘 S8 — Contrats immobiliers (1/3)',       det:'Intro. (p.1) + P1 Chap. 1 (p.2–12)',                                     p:12},
+]},
+{date:'2026-06-19',seances:[
+  {mid:'contimmo',mom:'Matin',    lab:'📘 S8 — Contrats immobiliers (2/3)',        det:'P1 Chap. 2 (p.13–18) + P2 Chap. 1 début (p.19–22)',                     p:10},
+  {mid:'contimmo',mom:'Après-midi',lab:'📘 S8 — Contrats immobiliers (3/3)',       det:'P2 Chap. 1 fin (p.23–28) + P2 Chap. 2 (p.29–34) — 34p au total',       p:12, cm:'lec1'},
+]},
+];
+
+const SEMAINES=[
+  {num:1, title:'1ère passe S7',                             dates:'18 → 23 mai 2026',   slice:[0,6]},
+  {num:2, title:'1ère passe S7 (fin) + début relecture',     dates:'25 → 30 mai 2026',   slice:[7,13]},
+  {num:3, title:'Relecture complète S7 + résultats S8',      dates:'1 → 6 juin 2026',    slice:[14,20]},
+  {num:4, title:'Sécurité S7 + S8 conditionnel',             dates:'8 → 13 juin 2026',   slice:[21,27]},
+  {num:5, title:'Relecture légère — à tête reposée ☀️',      dates:'15 → 19 juin 2026',  slice:[28,32]},
+];
+
+// ── STATE ──────────────────────────────────────────────────
+const KEY='rattrapages_v4';
+let state={};
+try{state=JSON.parse(localStorage.getItem(KEY))||{};}catch{}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch{}}
+
+function getRevisions(){
+  const c={};ALL.forEach(m=>c[m.id]=0);
+  DAYS.forEach(d=>{if(d.off)return;(d.seances||[]).forEach((s,si)=>{if(state[d.date+'_'+si]&&s.cm)c[s.mid]++;});});
+  return c;
+}
+
+// ── LÉGENDE ────────────────────────────────────────────────
+function renderLegend(){
+  const revs=getRevisions();
+  [['legend-s7',S7],['legend-s8',S8]].forEach(([id,arr])=>{
+    const el=document.getElementById(id);el.innerHTML='';
+    arr.forEach(m=>{
+      const n=revs[m.id]||0;
+      const cls=n>=3?'revue-3':n===2?'revue-2':n===1?'revue-1':'';
+      const lbl=n>=3?'3x+':n>0?n+'x':'';
+      const pLbl=`${m.pages}p`;
+      el.innerHTML+=`<div class="matiere-badge ${cls}">
+        <span class="badge-dot" style="background:${m.color}"></span>
+        <span class="badge-name">${m.label}</span>
+        <span class="badge-pages">${pLbl}</span>
+        <span class="badge-count">${lbl}</span>
+      </div>`;
+    });
+  });
+}
+
+// ── PROGRESS ───────────────────────────────────────────────
+function renderProgress(){
+  const total=DAYS.reduce((a,d)=>a+(d.seances?d.seances.length:0),0);
+  const done=Object.values(state).filter(Boolean).length;
+  const pct=total>0?Math.round(done/total*100):0;
+  document.getElementById('pct-global').textContent=pct+'%';
+  document.getElementById('bar-global').style.width=pct+'%';
+  document.getElementById('done-count').textContent=done;
+  document.getElementById('total-count').textContent=total;
+}
+function renderSemCounts(){
+  document.querySelectorAll('.semaine-prog').forEach((el,i)=>{
+    const s=SEMAINES[i];
+    const days=DAYS.slice(s.slice[0],s.slice[1]+1);
+    const total=days.reduce((a,d)=>a+(d.seances?d.seances.length:0),0);
+    const done=days.reduce((a,d)=>d.seances?a+d.seances.filter((_,si)=>state[d.date+'_'+si]).length:a,0);
+    el.innerHTML=`<strong>${done}</strong>/${total} séances`;
+  });
+}
+
+// ── PLANNING ───────────────────────────────────────────────
+function fmtDate(ds){
+  const d=new Date(ds+'T12:00:00');
+  return d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+}
+
+function renderPlanning(){
+  const container=document.getElementById('planning-container');
+  container.innerHTML='';
+
+  SEMAINES.forEach(sem=>{
+    const semDays=DAYS.slice(sem.slice[0],sem.slice[1]+1);
+    const block=document.createElement('div');
+    block.className='semaine-block';
+    block.innerHTML=`
+      <div class="semaine-header">
+        <div class="semaine-num">S${sem.num}</div>
+        <div class="semaine-meta">
+          <div class="semaine-title">${sem.title}</div>
+          <div class="semaine-dates">${sem.dates}</div>
+        </div>
+        <div class="semaine-prog"></div>
+      </div>`;
+
+    const grid=document.createElement('div');
+    grid.className='jours-grid';
+
+    semDays.forEach(jour=>{
+      const card=document.createElement('div');
+      card.className='jour-card'+(jour.off?' off':'');
+
+      const fd=fmtDate(jour.date);
+      const parts=fd.split(' ');
+      const wday=parts[0];
+      const drest=parts.slice(1).join(' ');
+
+      if(jour.off){
+        card.innerHTML=`
+          <div class="jour-head">
+            <span class="jour-weekday">${wday}</span>
+            <span class="jour-datenum">${drest}</span>
+          </div>
+          <div class="jour-body"><p class="off-label">☀️ Jour OFF — repos</p></div>`;
+      } else {
+        const totalP=(jour.seances||[]).reduce((a,s)=>a+(s.p||0),0);
+        const pLabel=totalP>0?`${totalP}p / jour`:'relecture';
+        const resultBadge=jour.resultats?`<span class="resultats-badge">⚠️ Résultats S8</span>`:'';
+        const allDone=(jour.seances||[]).every((_,i)=>state[jour.date+'_'+i]);
+
+        const seancesHtml=(jour.seances||[]).map((s,si)=>{
+          const key=jour.date+'_'+si;
+          const done=!!state[key];
+          const m=getM(s.mid);
+          const col=m?m.color:'#666';
+          const pTag=s.p>0?`${s.p} pages`:'relecture';
+          let flag='';
+          if(s.cm==='lec1') flag=`<span class="finish-flag lec1">🏁 Fin lecture 1</span>`;
+          if(s.cm==='lec2') flag=`<span class="finish-flag lec2">🔄 Fin relecture</span>`;
+          return `
+            <div class="seance" data-key="${key}">
+              <div class="check-box ${done?'done':''}" data-key="${key}"></div>
+              <div class="seance-content">
+                <div class="seance-moment">${s.mom}</div>
+                <div class="seance-mat-row">
+                  <span class="seance-mat" style="color:${col}">${s.lab}</span>
+                  ${flag}
+                </div>
+                <div class="seance-detail">${s.det}</div>
+                <div class="seance-pages-tag">${pTag}</div>
+              </div>
+            </div>`;
+        }).join('');
+
+        card.innerHTML=`
+          <div class="jour-head">
+            <span class="jour-weekday">${wday}</span>
+            <span class="jour-datenum">${drest}${resultBadge}</span>
+            <span class="jour-total-pages">${pLabel}</span>
+          </div>
+          <div class="jour-body">${seancesHtml}</div>`;
+
+        if(allDone&&(jour.seances||[]).length>0) card.classList.add('all-done');
+      }
+
+      grid.appendChild(card);
+    });
+
+    block.appendChild(grid);
+    container.appendChild(block);
+  });
+
+  document.querySelectorAll('.check-box').forEach(el=>{
+    el.addEventListener('click',e=>{
+      const key=e.currentTarget.dataset.key;
+      state[key]=!state[key];
+      save();
+      e.currentTarget.classList.toggle('done',state[key]);
+      const card=e.currentTarget.closest('.jour-card');
+      const all=[...card.querySelectorAll('.check-box')].every(c=>c.classList.contains('done'));
+      card.classList.toggle('all-done',all);
+      renderProgress();
+      renderSemCounts();
+      renderLegend();
+    });
+  });
+}
+
+// ── INIT ───────────────────────────────────────────────────
+renderLegend();
+renderPlanning();
+renderProgress();
+renderSemCounts();
+</script>
+</body>
+</html>
