@@ -150,7 +150,7 @@ main{max-width:1200px;margin:0 auto;padding:2rem;}
     <div class="bar-wrap"><div class="bar-fill" id="bar-global"></div></div>
     <div class="progress-stats">
       <span class="progress-stat"><strong id="done-count">0</strong> / <strong id="total-count">0</strong> séances cochées</span>
-      <span class="progress-stat">S7 : <strong>119p</strong> · S8 : <strong>Sûretés 13p · Contrats immo. 34p</strong></span>
+      <span class="progress-stat">S7 : <strong>119p</strong> · S8 : <strong>Sûretés 21p · Contrats immo. 34p</strong></span>
     </div>
   </div>
 </header>
@@ -180,7 +180,7 @@ main{max-width:1200px;margin:0 auto;padding:2rem;}
   <div class="legend-grid" id="legend-s7"></div>
 </div>
 <div class="legend-section">
-  <p class="section-label">Matières S8 — Sûretés 13p · Contrats immobiliers 34p</p>
+  <p class="section-label">Matières S8 — Sûretés 21p · Contrats immobiliers 34p</p>
   <div class="legend-grid" id="legend-s8"></div>
 </div>
 <div id="planning-container"></div>
@@ -197,7 +197,7 @@ const S7=[
   {id:'assur', label:'Droit des assurances',pages:19,color:'var(--assur)'},
 ];
 const S8=[
-  {id:'suret',   label:'Sûretés',pages:13,color:'var(--suret)'},
+  {id:'suret',   label:'Sûretés',pages:21,color:'var(--suret)'},
   {id:'contimmo',label:'Contrats immobiliers',pages:34,color:'var(--contimmo)'},
 ];
 const ALL=[...S7,...S8];
@@ -304,16 +304,17 @@ const DAYS=[
 ]},
 {date:'2026-06-11',seances:[
   {mid:'contimmo',mom:'Matin',    lab:'📘 Contrats immo. (3/3)',                  det:'P2 Chap. 1 fin (p.23–28) + P2 Chap. 2 (p.29–34) — 34p au total',p:12,cm:'lec1'},
-  {mid:'suret', mom:'Après-midi', lab:'📘 Sûretés (1/2)',                         det:'Intro. (p.1) + P1 Chap. 1 (p.2–5) + P1 Chap. 2 (p.6–7) + P2 Chap. prél. (p.8)',p:8},
+  {mid:'suret', mom:'Après-midi', lab:'📘 Sûretés (1/2) — Intro. + P1',           det:'Intro. (p.1) + Partie 1 : Chap. 1 (p.2–8) + Chap. 2 (p.9–11)',p:11},
   {mid:'hdj',   mom:'Bonus S7',   lab:'📋 Bonus : relecture rapide HDJ',          det:'Diagonal — points clés (14p)',p:0,bonus:true},
 ]},
 {date:'2026-06-12',seances:[
-  {mid:'suret', mom:'Matin',      lab:'📘 Sûretés (2/2)',                         det:'P2 Chap. 1 (p.9–11) + P2 Chap. 2 (p.12–13) — fin Sûretés 1ère lecture',p:5,cm:'lec1'},
+  {mid:'suret', mom:'Matin',      lab:'📘 Sûretés (2/2) — Partie 2',              det:'Partie 2 : Chap. prél. (p.12) + Chap. 1 (p.13–17) + Chap. 2 (p.18–21) — 21p au total',p:10,cm:'lec2'},
   {mid:'contimmo',mom:'Après-midi',lab:'🔁 Relecture Contrats immo. (1/3)',        det:'Intro. (p.1) + P1 Chap. 1 (p.2–12)',p:12},
   {mid:'rm',    mom:'Bonus S7',   lab:'📋 Bonus : relecture rapide RM',            det:'Diagonal — points clés (18p)',p:0,bonus:true},
 ]},
 {date:'2026-06-13',seances:[
-  {mid:'contimmo',mom:'Matin',    lab:'🔁 Relecture Contrats immo. (2/2)',         det:'P2 Chap. 1 (p.19–28) + P2 Chap. 2 (p.29–34) — 34p au total',p:12,cm:'lec2'},
+  {mid:'contimmo',mom:'Matin',    lab:'🔁 Relecture Contrats immo. (2/3)',         det:'P1 Chap. 2 (p.13–18) + P2 Chap. 1 début (p.19–22)',p:10},
+  {mid:'contimmo',mom:'Après-midi',lab:'🔁 Relecture Contrats immo. (3/3)',        det:'P2 Chap. 1 fin (p.23–28) + P2 Chap. 2 (p.29–34) — 34p relecture complète',p:12,cm:'lec2'},
   {mid:'succ',  mom:'Bonus S7',   lab:'📋 Bonus : relecture rapide Successions',  det:'Diagonal — points clés (21p)',p:0,bonus:true},
 ]},
 {date:'2026-06-14',off:true},
@@ -322,7 +323,7 @@ const DAYS=[
 {date:'2026-06-15',seances:[
   {mid:'hdj',   mom:'Matin',      lab:'⭐ Relecture HDJ — Intro. + Partie 1',    det:'Intro. (p.1) + P1 Chap. 1 (p.2–4) + P1 Chap. 2 (p.5–10)',p:7},
   {mid:'hdj',   mom:'Après-midi', lab:'⭐ Relecture HDJ — Partie 2',             det:'Partie 2 (p.11–14) — 14p au total',p:7,cm:'lec3'},
-  {mid:'suret', mom:'Bonus S8',   lab:'📋 Bonus S8 : relecture rapide Sûretés',  det:'Diagonal — points clés (13p)',p:0,bonus:true},
+  {mid:'suret', mom:'Bonus S8',   lab:'📋 Bonus S8 : relecture rapide Sûretés',  det:'Diagonal — points clés (21p)',p:0,bonus:true},
 ]},
 {date:'2026-06-16',seances:[
   {mid:'succ',  mom:'Matin',      lab:'⭐ Relecture Successions — Intro. à Chap. 1',det:'Intro. (p.1–2) + Méthodo. (p.3) + Chap. prél. (p.4–7) + Chap. 1 (p.8–12)',p:9},
@@ -332,7 +333,7 @@ const DAYS=[
 {date:'2026-06-17',seances:[
   {mid:'rm',    mom:'Matin',      lab:'⭐ Relecture RM — Intro. + Livre 1 + L2 Chap. prél.',det:'Intro. (p.1–2) + Livre 1 (p.3–6) + L2 Chap. prél. (p.7–8)',p:8},
   {mid:'rm',    mom:'Après-midi', lab:'⭐ Relecture RM — L2 Chap. 1',            det:'L2 Chap. 1 (p.9–18) — 18p au total',p:10,cm:'lec3'},
-  {mid:'suret', mom:'Bonus S8',   lab:'📋 Bonus S8 : relecture rapide Sûretés',  det:'Diagonal — points clés (13p)',p:0,bonus:true},
+  {mid:'suret', mom:'Bonus S8',   lab:'📋 Bonus S8 : relecture rapide Sûretés',  det:'Diagonal — points clés (21p)',p:0,bonus:true},
 ]},
 {date:'2026-06-18',seances:[
   {mid:'dep',   mom:'Matin',      lab:'⭐ Relecture Dépendance — Intro. + Chap. 1–3',det:'Intro. (p.1) + Chap. 1 (p.2–4) + Chap. 2 (p.5–8) + Chap. 3 (p.9–12)',p:9},
@@ -342,7 +343,7 @@ const DAYS=[
 {date:'2026-06-19',seances:[
   {mid:'conso7',mom:'Matin',      lab:'⭐ Relecture Conso. S7 — Intro. + Chap. 1',det:'Intro. (p.1–2) + Chap. 1 (p.3–8)',p:8},
   {mid:'conso7',mom:'Après-midi', lab:'⭐ Relecture Conso. S7 — Chap. 2 + Chap. 3',det:'Chap. 2 (p.9–12) + Chap. 3 (p.13–16) — 16p au total',p:8,cm:'lec3'},
-  {mid:'suret', mom:'Bonus S8',   lab:'📋 Bonus S8 : relecture rapide Sûretés',   det:'Diagonal — points clés (13p)',p:0,bonus:true},
+  {mid:'suret', mom:'Bonus S8',   lab:'📋 Bonus S8 : relecture rapide Sûretés',   det:'Diagonal — points clés (21p)',p:0,bonus:true},
 ]},
 {date:'2026-06-20',seances:[
   {mid:'assur', mom:'Matin',      lab:'⭐ Relecture Assurances — Intro. + T1',   det:'Intro. (p.1–2) + T1 Chap. 1 (p.3–5) + T1 Chap. 2 (p.6–9) + T1 Chap. 3 (p.10–11)',p:11},
@@ -394,14 +395,14 @@ const DAYS=[
 {date:'2026-06-29',seances:[
   {mid:'contimmo',mom:'Matin',    lab:'🎯 Relecture Contrats immo. — Intro. + P1',det:'Intro. (p.1) + P1 Chap. 1 (p.2–12) + P1 Chap. 2 (p.13–18)',p:18,tip:'💡 Examen Contrats immo. demain mardi 9h–11h'},
   {mid:'contimmo',mom:'Après-midi',lab:'🎯 Relecture Contrats immo. — P2',         det:'P2 Chap. 1 (p.19–28) + P2 Chap. 2 (p.29–34) — 34p au total',p:16,cm:'lec4'},
-  {mid:'suret',  mom:'Soir',      lab:'🎯 Relecture Sûretés avant mercredi',       det:'Intro. + toutes les parties (p.1–13) — 13p',p:0,tip:'💡 Examen Sûretés mercredi 13h30'},
+  {mid:'suret',  mom:'Soir',      lab:'🎯 Relecture Sûretés avant mercredi',       det:'Intro. + P1 (p.1–11) + P2 (p.12–21) — 21p',p:0,tip:'💡 Examen Sûretés mercredi 13h30'},
 ]},
 {date:'2026-06-30',exam:true,seances:[
   {mid:'contimmo',mom:'9h–11h',   lab:'🎓 EXAMEN Contrats immobiliers',           det:'Contrats immobiliers',p:0},
-  {mid:'suret', mom:'Après-midi', lab:'🎯 Relecture Sûretés — intégralité',       det:'Intro. + toutes les parties (p.1–13) — 13p · examen demain 13h30',p:13,tip:'💡 Examen Sûretés demain 13h30 — relis bien les définitions'},
+  {mid:'suret', mom:'Après-midi', lab:'🎯 Relecture Sûretés — intégralité',       det:'Intro. (p.1) + P1 (p.2–11) + P2 (p.12–21) — 21p · examen demain 13h30',p:21,tip:'💡 Examen Sûretés demain 13h30 — relis bien les définitions'},
 ]},
 {date:'2026-07-01',exam:true,seances:[
-  {mid:'suret', mom:'Matin (avant 13h30)',lab:'🎯 Dernière relecture Sûretés',    det:'Points clés, définitions, schémas mentaux',p:0,tip:'💡 Examen Sûretés à 13h30 — tu es prête !'},
+  {mid:'suret', mom:'Matin (avant 13h30)',lab:'🎯 Dernière relecture Sûretés — intégralité',det:'Intro. (p.1) + P1 (p.2–11) + P2 (p.12–21) — 21p — points clés et définitions',p:21,tip:'💡 Examen Sûretés à 13h30 — tu es prête !'},
   {mid:'suret', mom:'13h30–15h30',lab:'🎓 EXAMEN Sûretés',                       det:'Droit des sûretés',p:0},
   {mid:'suret', mom:'Après',      lab:'🎉 TOUS les rattrapages terminés !',       det:'Félicitations — tu as tout donné 🏆',p:0},
 ]},
