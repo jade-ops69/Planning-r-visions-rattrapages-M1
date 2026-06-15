@@ -540,8 +540,11 @@ function renderPlanning(){
         const bonusSeances=(jour.seances||[]).filter(s=>s.bonus);
         const totalP=mainSeances.reduce((a,s)=>a+(s.p||0),0);
         const pLabel=totalP>0?`${totalP}p / jour`:'révision';
-        const allDone=(jour.seances||[]).every((_,i)=>state[jour.date+'_'+i]);
-        if(allDone&&(jour.seances||[]).length>0)card.classList.add('all-done');
+        const allDone=mainSeances.length>0&&mainSeances.every((s)=>{
+          const si=(jour.seances||[]).indexOf(s);
+          return state[jour.date+'_'+si];
+        });
+        if(allDone)card.classList.add('all-done');
         const rBadge=jour.resultats?`<span class="exam-badge-inline">⚠️ Résultats S8</span>`:'';
         const mainHtml=mainSeances.map((s)=>{
           const si=(jour.seances||[]).indexOf(s);
